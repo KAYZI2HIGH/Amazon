@@ -1,12 +1,16 @@
+import { Link } from "react-router-dom";
+
 const NavBar = () => {
   return (
     <nav className="w-screen flex justify-between items-center py-[15px] px-7 bg-slate-900 sm:space-x-20">
       <div className="border border-transparent p-2 hover:border-white">
-        <img
-          src="images\amazon-logo-white.png"
-          alt="Logo"
-          className="w-24"
-        />
+        <Link to="/">
+          <img
+            src="images\amazon-logo-white.png"
+            alt="Logo"
+            className="w-24"
+          />
+        </Link>
       </div>
       <div className="flex items-center justify-center space-x-5 sm:flex-1">
         <div className="flex flex-1 rounded-md overflow-hidden">
@@ -25,15 +29,19 @@ const NavBar = () => {
           </button>
         </div>
         <div className="px-4 border  border-transparent hover:border-white hidden sm:inline-block">
-          <h3 className="font-semibold text-white">Returns</h3>
-          <h1 className="font-semibold text-white">& orders</h1>
+          <Link to="/returns">
+            <h3 className="font-semibold text-white">Returns</h3>
+            <h1 className="font-semibold text-white">& orders</h1>
+          </Link>
         </div>
         <div className="relative border border-transparent hover:border-white px-2 py-1">
-          <img
-            src="images\icons\cart-icon.png"
-            alt=""
-            className="w-14"
-          />
+          <Link to='/cart'>
+            <img
+              src="images\icons\cart-icon.png"
+              alt=""
+              className="w-14"
+            />
+          </Link>
           <h1 className="absolute top-0 left-1/2 text-amber-600 font-bold text-lg">
             3
           </h1>
