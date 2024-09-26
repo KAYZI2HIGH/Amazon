@@ -1,11 +1,12 @@
 import React, { createContext, useState } from "react";
+import products from "../data.js";
 
 export const myContext = createContext();
 export const UseContext = ({ children }) => {
-  const [myName, setMyName] = useState("i am a boy");
+  const [productData, setProductData] = useState(products);
 
   return (
-    <myContext.Provider value={{ setMyName, myName }}>
+    <myContext.Provider value={{ productData, setProductData }}>
       {children}
     </myContext.Provider>
   );

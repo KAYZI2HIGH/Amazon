@@ -1,13 +1,22 @@
+import { useContext } from "react";
 import NavBar from "../NavBar";
-
+import { myContext } from "../../utils/UseContext";
+import Products from "./Products";
 
 const Home = () => {
+  const { productData, setProductData } = useContext(myContext);
   return (
     <section>
-      <NavBar/>
-      <h1>products goes here</h1>
+      <NavBar />
+      <main>
+        <section className="grid grid-cols-auto gap-[-1px]">
+          {productData.map((eachProducts) => {
+            return <Products product={eachProducts} key={eachProducts.id} />;
+          })}
+        </section>
+      </main>
     </section>
-   );
-}
- 
+  );
+};
+
 export default Home;

@@ -25,6 +25,9 @@ export default {
         body: "clamp(1rem, 0.4737rem + 2.807vw, 3rem)",
         heading: "clamp(2rem, 0.9474rem + 5.614vw, 6rem)",
       },
+      gridTemplateColumns: {
+        auto: "repeat(auto-fit, minmax(250px, 1fr))",
+      },
     },
   },
   plugins: [],

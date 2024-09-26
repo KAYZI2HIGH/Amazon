@@ -470,3 +470,5 @@ const products = [
     keywords: ["sweaters", "hoodies", "apparel", "mens"],
   },
 ];
+
+export default products;

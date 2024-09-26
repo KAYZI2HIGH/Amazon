@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <nav className="w-screen flex justify-between items-center py-[15px] px-7 bg-slate-900 sm:space-x-20">
+    <nav className="w-screen flex justify-between items-center sm:py-[15px] px-7 bg-slate-900 sm:space-x-20">
       <div className="border border-transparent p-2 hover:border-white">
         <Link to="/">
           <img
