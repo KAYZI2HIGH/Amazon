@@ -1,6 +1,10 @@
 import { Button, Rating } from "@mui/material";
+import { useContext } from "react";
+import { myContext } from "../../utils/UseContext";
 
 const Products = ({ product }) => {
+  const { addToCart } = useContext(myContext);
+
   return (
     <div className="w-full p-5 border flex flex-col justify-between">
       <div className="mx-auto">
@@ -24,7 +28,7 @@ const Products = ({ product }) => {
       </h2>
       <select
         name="selection"
-        className=" max-w-14 border border-gray-400 bg-gray-100 rounded-sm focus:outline-amber-600 focus:border-amber-600"
+        className=" max-w-14 border border-gray-400 bg-gray-100 rounded-sm focus:outline-amber-600 focus:border-amber-600" id={`selector-${product.id}`}
       >
         <option value="1">1</option>
         <option value="2">2</option>
@@ -37,9 +41,22 @@ const Products = ({ product }) => {
         <option value="9">9</option>
         <option value="10">10</option>
       </select>
-      <Button className="capitalize text-sm w-full py-2 bg-yellow-400 rounded-3xl mt-10 hover:bg-yellow-500 text-black">
-        add to cart
-      </Button>
+      <div className="mt-8 space-y-2">
+        <p
+          className="text-green-800 flex items-center font-semibold justify-center space-x-2 w-fit h-4"
+          id={product.id}
+        >
+          
+        </p>
+        <Button
+          className="capitalize text-sm w-full py-2 bg-yellow-400 rounded-3xl hover:bg-yellow-500 text-black"
+          onClick={() => {
+            addToCart(product);
+          }}
+        >
+          add to cart
+        </Button>
+      </div>
     </div>
   );
 };

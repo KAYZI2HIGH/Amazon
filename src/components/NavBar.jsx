@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { myContext } from "../utils/UseContext";
 
 const NavBar = () => {
+  const {cartQuantity} = useContext(myContext)
   return (
-    <nav className="w-screen flex justify-between items-center sm:py-[15px] px-7 bg-slate-900 sm:space-x-20">
+    <nav className="w-screen flex justify-between items-center sm:py-[15px] px-7 bg-slate-900 sm:space-x-20 fixed top-0 left-0 right-0 z-20">
       <div className="border border-transparent p-2 hover:border-white">
         <Link to="/">
           <img
@@ -42,8 +45,8 @@ const NavBar = () => {
               className="w-14"
             />
           </Link>
-          <h1 className="absolute top-0 left-1/2 text-amber-600 font-bold text-lg">
-            3
+          <h1 className="absolute top-0 right-1/3 text-amber-600 font-bold text-lg">
+            {cartQuantity}
           </h1>
         </div>
       </div>

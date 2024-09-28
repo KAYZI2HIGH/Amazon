@@ -9,9 +9,14 @@ const Home = () => {
     <section>
       <NavBar />
       <main>
-        <section className="grid grid-cols-auto gap-[-1px]">
+        <section className="grid grid-cols-auto gap-[-1px] mt-20">
           {productData.map((eachProducts) => {
-            return <Products product={eachProducts} key={eachProducts.id} />;
+            return (
+              <Products
+                product={eachProducts}
+                key={eachProducts.id}
+              />
+            );
           })}
         </section>
       </main>
