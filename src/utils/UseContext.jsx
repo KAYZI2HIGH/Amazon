@@ -14,12 +14,20 @@ export const UseContext = ({ children }) => {
   const [totalCartAmount, setTotalCartAmount] = useState(0);
   const [shippingFee, setShippingFee] = useState(494);
   const [tax, setTax] = useState(477);
+  const [editQuantity, setEditQuantity] = useState(false);
+
+  useEffect(() => {
+    const getLocalStorage = window.localStorage.getItem("cartData");
+    setcartData(JSON.parse(getLocalStorage));
+  }, []);
 
   useEffect(() => {
     let quantity = 0;
     let totalAmount = 0;
     let eachAmount = 0;
     let totalShippingFee = 0;
+
+    window.localStorage.setItem("cartData", JSON.stringify(cartData));
 
     cartData.map((data) => {
       quantity += data.quantity;
@@ -32,7 +40,8 @@ export const UseContext = ({ children }) => {
         }
       });
     });
-    setShippingFee(totalShippingFee)
+    setShippingFee(totalShippingFee);
+    setTax((totalAmount + totalShippingFee) * (10 / 100));
     setCartQuantity(quantity);
     setTotalCartAmount(totalAmount);
   }, [cartData, quantityChanged]);
@@ -82,6 +91,37 @@ export const UseContext = ({ children }) => {
     setcartData(cartData.filter((deleteCart) => deleteCart.id !== id));
   };
 
+  const handleUpdate = (id) => {
+    document.getElementById(`button-${id}`).classList.add("hidden");
+    document.getElementById(`edit-${id}`).classList.replace("hidden", "flex");
+  };
+  const handleUpdateIncrement = (id) => {
+    setcartData((currentState) => {
+      return currentState.map((eachState) => {
+        if (eachState.id === id) {
+          return { ...eachState, quantity: eachState.quantity + 1 };
+        } else {
+          return { ...eachState };
+        }
+      });
+    });
+  };
+  const handleUpdateDecrement = (id) => {
+    setcartData((currentState) => {
+      return currentState.map((eachState) => {
+        if (eachState.id === id) {
+          return { ...eachState, quantity: eachState.quantity - 1 };
+        } else {
+          return { ...eachState };
+        }
+      });
+    });
+  };
+  const doneUpdating = (id) => {
+    document.getElementById(`edit-${id}`).classList.add("hidden");
+    document.getElementById(`button-${id}`).classList.replace("hidden", "flex");
+  };
+
   return (
     <myContext.Provider
       value={{
@@ -93,6 +133,10 @@ export const UseContext = ({ children }) => {
         addToCart,
         cartQuantity,
         handleDelete,
+        handleUpdate,
+        handleUpdateIncrement,
+        handleUpdateDecrement,
+        doneUpdating,
         totalCartAmount,
         shippingFee,
         tax,

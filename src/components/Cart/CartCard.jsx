@@ -3,9 +3,15 @@ import { useContext } from "react";
 import { myContext } from "../../utils/UseContext";
 
 const CartCard = ({ data }) => {
-  const { handleDelete } = useContext(myContext);
-  const { deliveryOption } = useContext(myContext);
-  const { setcartData } = useContext(myContext);
+  const {
+    handleDelete,
+    deliveryOption,
+    setcartData,
+    handleUpdate,
+    handleUpdateIncrement,
+    handleUpdateDecrement,
+    doneUpdating,
+  } = useContext(myContext);
 
   return (
     <Card
@@ -52,10 +58,13 @@ const CartCard = ({ data }) => {
                 >
                   Quantity: {data.quantity}
                 </Typography>
-                <div>
+                <div id={`button-${data.id}`}>
                   <Button
                     variant="text"
                     color="primary"
+                    onClick={() => {
+                      handleUpdate(data.id);
+                    }}
                   >
                     Update
                   </Button>
@@ -68,6 +77,29 @@ const CartCard = ({ data }) => {
                   >
                     Delete
                   </Button>
+                </div>
+                <div
+                  className="hidden space-x-2 pl-4"
+                  id={`edit-${data.id}`}
+                >
+                  <button className="font-semibold text-lg text-white bg-green-800 px-3 rounded-lg text-center h-8 hover:bg-green-900"
+                    onClick={() => {
+                    handleUpdateDecrement(data.id)
+                  }}
+                  >
+                    -
+                  </button>
+                  <button
+                    className="font-semibold text-lg text-white bg-green-800 px-3 rounded-lg text-center h-8 hover:bg-green-900"
+                    onClick={() => {
+                      handleUpdateIncrement(data.id);
+                    }}
+                  >
+                    +
+                  </button>
+                  <Button onClick={() => {
+                    doneUpdating(data.id)
+                  }}>DONE</Button>
                 </div>
               </div>
             </div>

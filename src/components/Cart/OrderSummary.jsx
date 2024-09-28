@@ -18,7 +18,7 @@ const OrderSummary = () => {
         </div>
         <div className="flex justify-between">
           <p>Shipping and Handling:</p>
-          <p>${shippingFee / 100}</p>
+          <p>${(shippingFee / 100).toFixed(2)}</p>
         </div>
       </div>
       <div>
@@ -30,8 +30,8 @@ const OrderSummary = () => {
           </p>
         </div>
         <div className="flex justify-between border-b">
-          <p>Estimated TAX:</p>
-          <p>${tax / 100}</p>
+          <p>Estimated TAX (10%):</p>
+          <p>${(tax / 100).toFixed(2)}</p>
         </div>
       </div>
       <div className="flex justify-between">
