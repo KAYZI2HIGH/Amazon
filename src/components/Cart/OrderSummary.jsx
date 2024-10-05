@@ -1,9 +1,12 @@
 import { Card, Typography, Button } from "@mui/material";
 import React, { useContext } from "react";
 import { myContext } from "../../utils/UseContext";
+import { useNavigate } from "react-router-dom";
 
 const OrderSummary = () => {
-  const { cartQuantity, totalCartAmount, shippingFee, tax } = useContext(myContext);
+  const { cartQuantity, totalCartAmount, shippingFee, tax, handlePlaceOrders } =
+    useContext(myContext);
+  const navigate = useNavigate();
 
   return (
     <Card
@@ -47,12 +50,20 @@ const OrderSummary = () => {
           color="error"
           className="font-bold tracking-wide"
         >
-          ${((Number(totalCartAmount) + Number(shippingFee) + Number(tax)) / 100).toFixed(2)}
+          $
+          {(
+            (Number(totalCartAmount) + Number(shippingFee) + Number(tax)) /
+            100
+          ).toFixed(2)}
         </Typography>
       </div>
       <Button
         variant="contained"
         className="bg-yellow-400 w-full capitalize"
+        onClick={() => {
+          handlePlaceOrders();
+          navigate("/feedback");
+        }}
       >
         Place your order
       </Button>

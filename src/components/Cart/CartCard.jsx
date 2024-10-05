@@ -34,7 +34,7 @@ const CartCard = ({ data }) => {
           <div className="flex flex-col sm:space-x-8 sm:flex-row">
             <img
               src={data.image}
-              className="size-full sm:size-20"
+              className="w-40 mx-auto sm:mx-0 sm:size-20"
             />
             <div className="space-y-1">
               <Typography

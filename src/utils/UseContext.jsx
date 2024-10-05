@@ -1,13 +1,19 @@
 import React, { createContext, useEffect, useState } from "react";
 import products from "../data/data.js";
-import cart from "../data/cart.js";
 import deliveryOptionData from "../data/deliveryOption.js";
+import { uid } from "uid";
 
 export const myContext = createContext();
 
 export const UseContext = ({ children }) => {
   const [productData, setProductData] = useState(products);
-  const [cartData, setcartData] = useState(cart);
+  const [cartData, setcartData] = useState(
+    JSON.parse(localStorage.getItem("cartData")) || []
+  );
+  const [orders, setOrders] = useState(
+    JSON.parse(localStorage.getItem("orders")) || []
+  );
+  const [search, setSearch] = useState('');
   const [deliveryOption, setDeliveryOption] = useState(deliveryOptionData);
   const [cartQuantity, setCartQuantity] = useState(0);
   const [quantityChanged, setQuantityChanged] = useState(false);
@@ -15,11 +21,6 @@ export const UseContext = ({ children }) => {
   const [shippingFee, setShippingFee] = useState(494);
   const [tax, setTax] = useState(477);
   const [editQuantity, setEditQuantity] = useState(false);
-
-  useEffect(() => {
-    const getLocalStorage = window.localStorage.getItem("cartData");
-    setcartData(JSON.parse(getLocalStorage));
-  }, []);
 
   useEffect(() => {
     let quantity = 0;
@@ -46,6 +47,10 @@ export const UseContext = ({ children }) => {
     setTotalCartAmount(totalAmount);
   }, [cartData, quantityChanged]);
 
+  useEffect(() => {
+    window.localStorage.setItem("orders", JSON.stringify(orders));
+  }, [orders]);
+
   const addToCart = (item) => {
     let matchData;
     const selectorValue = document.getElementById(`selector-${item.id}`).value;
@@ -53,8 +58,18 @@ export const UseContext = ({ children }) => {
     cartData.find((data) => {
       if (data.id === item.id) {
         matchData = data;
-        data.quantity += Number(selectorValue);
-        setQuantityChanged(true);
+        setcartData((currentState) => {
+          return currentState.map((eachState) => {
+            if (eachState.id === data.id) {
+              return {
+                ...eachState,
+                quantity: eachState.quantity + Number(selectorValue),
+              };
+            } else {
+              return { ...eachState };
+            }
+          });
+        });
       }
     });
     if (!matchData) {
@@ -110,7 +125,11 @@ export const UseContext = ({ children }) => {
     setcartData((currentState) => {
       return currentState.map((eachState) => {
         if (eachState.id === id) {
-          return { ...eachState, quantity: eachState.quantity - 1 };
+          if (eachState.quantity === 0) {
+            handleDelete(id);
+          } else {
+            return { ...eachState, quantity: eachState.quantity - 1 };
+          }
         } else {
           return { ...eachState };
         }
@@ -121,6 +140,60 @@ export const UseContext = ({ children }) => {
     document.getElementById(`edit-${id}`).classList.add("hidden");
     document.getElementById(`button-${id}`).classList.replace("hidden", "flex");
   };
+  const handleBuyAgain = (item) => {
+    let matchData;
+
+   cartData.find((data) => {
+     if (data.id === item.id) {
+       matchData = data;
+       setcartData((currentState) => {
+         return currentState.map((eachState) => {
+           if (eachState.id === data.id) {
+             return {
+               ...eachState,
+               quantity: eachState.quantity + 1,
+             };
+           } else {
+             return { ...eachState };
+           }
+         });
+       });
+     }
+   });
+    if (!matchData) {
+      setcartData([
+        {
+          id: item.id,
+          image: item.image,
+          name: item.name,
+          priceCents: item.priceCents,
+          quantity: 1,
+          deliveryOptionId: "1",
+        },
+        ...cartData,
+      ]);
+    }
+    let quantity = 0;
+    cartData.map((data) => {
+      quantity += data.quantity;
+    });
+    setCartQuantity(quantity);
+  };
+
+  const handlePlaceOrders = () => {
+    setOrders([
+      {
+        orderId: uid(36),
+        total: totalCartAmount + shippingFee + tax,
+        orderDate: "August 5",
+        products: cartData,
+      },
+      ...orders,
+    ]);
+    setTimeout(() => {
+      setcartData([]);
+    }, 100);
+  };
 
   return (
     <myContext.Provider
@@ -129,6 +202,9 @@ export const UseContext = ({ children }) => {
         setProductData,
         cartData,
         setcartData,
+        orders,
+        search,
+        setSearch,
         deliveryOption,
         addToCart,
         cartQuantity,
@@ -137,6 +213,8 @@ export const UseContext = ({ children }) => {
         handleUpdateIncrement,
         handleUpdateDecrement,
         doneUpdating,
+        handleBuyAgain,
+        handlePlaceOrders,
         totalCartAmount,
         shippingFee,
         tax,
