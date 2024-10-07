@@ -1,17 +1,17 @@
 const deliveryOptionData = [
   {
     id: "1",
-    date: "Tuesday, June 25",
+    date: 7,
     priceCents: 0,
   },
   {
     id: "2",
-    date: "Wednesday, June 15",
+    date: 3,
     priceCents: 499,
   },
   {
     id: "3",
-    date: "Friday, June 5",
+    date: 1,
     priceCents: 999,
   },
 ];

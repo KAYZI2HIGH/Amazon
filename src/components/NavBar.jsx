@@ -11,7 +11,12 @@ const NavBar = () => {
           <img
             src="/images/amazon-logo-white.png"
             alt="Logo"
-            className="w-24"
+            className="w-24 hidden sm:flex"
+          />
+          <img
+            src="/images/amazon-mobile-logo-white.png"
+            alt="Logo"
+            className="w-10 sm:hidden flex"
           />
         </Link>
       </div>

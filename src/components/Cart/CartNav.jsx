@@ -9,9 +9,14 @@ const CartNav = () => {
       <div className="border border-transparent p-2 hover:border-black">
         <Link to="/">
           <img
-            src="images\amazon-logo.png"
+            src="/images/amazon-logo.png"
             alt="Logo"
-            className="w-24"
+            className="w-24 hidden sm:flex"
+          />
+          <img
+            src="/images/amazon-mobile-logo.png"
+            alt="Logo"
+            className="w-10 sm:hidden flex"
           />
         </Link>
       </div>

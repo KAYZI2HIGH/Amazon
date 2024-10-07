@@ -1,6 +1,7 @@
 import { Card, Typography, Button } from "@mui/material";
 import { useContext } from "react";
 import { myContext } from "../../utils/UseContext";
+import dayjs from "dayjs";
 
 const CartCard = ({ data }) => {
   const {
@@ -26,7 +27,7 @@ const CartCard = ({ data }) => {
         >
           {deliveryOption.map((option) => {
             if (option.id === data.deliveryOptionId) {
-              return `Delivery Date: ${option.date}`;
+              return `Delivery Date: ${dayjs().add(option.date, 'days').format('dddd, DD MMMM')}`;
             }
           })}
         </Typography>
@@ -113,6 +114,7 @@ const CartCard = ({ data }) => {
             </Typography>
             {deliveryOption.map((option) => (
               <label
+              key={option.id}
                 className="flex items-center justify-center w-fit"
                 onClick={() => {
                   setcartData((currentState) => {
@@ -138,7 +140,7 @@ const CartCard = ({ data }) => {
                     color="success"
                     className="font-semibold tracking-wide"
                   >
-                    {option.date}
+                    {dayjs().add(option.date, 'days').format('dddd, DD MMMM')}
                   </Typography>
                   <Typography
                     variant="p"

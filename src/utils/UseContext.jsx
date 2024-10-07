@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import products from "../data/data.js";
 import deliveryOptionData from "../data/deliveryOption.js";
 import { uid } from "uid";
+import dayjs from "dayjs";
 
 export const myContext = createContext();
 
@@ -21,6 +22,8 @@ export const UseContext = ({ children }) => {
   const [shippingFee, setShippingFee] = useState(494);
   const [tax, setTax] = useState(477);
   const [editQuantity, setEditQuantity] = useState(false);
+
+  
 
   useEffect(() => {
     let quantity = 0;
@@ -185,7 +188,7 @@ export const UseContext = ({ children }) => {
       {
         orderId: uid(36),
         total: totalCartAmount + shippingFee + tax,
-        orderDate: "August 5",
+        orderDate: dayjs().format('dddd, DD MMMM'),
         products: cartData,
       },
       ...orders,

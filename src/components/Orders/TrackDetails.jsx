@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { myContext } from "../../utils/UseContext";
+import dayjs from "dayjs";
 
 const TrackDetails = ({ data }) => {
+  const { deliveryOption } = useContext(myContext);
+
   return (
     <section className="space-y-4">
       <Link
@@ -12,7 +16,10 @@ const TrackDetails = ({ data }) => {
       </Link>
       <div>
         <h1 className="text-body font-semibold text-text-blue">
-          Arriving on {data.deliveryDate}
+          Arriving on{" "}
+          {deliveryOption.map((option) => {
+            return option.id === data.deliveryOptionId ? dayjs().add(option.date, 'days').format('dddd, DD MMMM') : "";
+          })}
         </h1>
         <h2 className="text-lg font-semibold">{data.name}</h2>
         <h2 className="text-lg">Quantity: {data.quantity}</h2>
